@@ -20,7 +20,7 @@ class IndexController extends AbstractActionController
 
         return new ViewModel([
             'username' => $session->login,
-            'role'     => $session->role,   // ← ajoute cette ligne
+            'role'     => $session->role,   
 
         ]);
     }
