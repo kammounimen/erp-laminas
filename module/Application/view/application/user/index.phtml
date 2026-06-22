@@ -1,0 +1,66 @@
+<?php
+/** @var \Laminas\View\Renderer\PhpRenderer $this */
+/** @var \Laminas\Db\ResultSet\ResultSetInterface $users */
+?>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-people-fill me-2 text-primary"></i>Liste des utilisateurs</h2>
+    <a href="<?= $this->url('user', ['action' => 'add']) ?>" class="btn btn-success">
+        <i class="bi bi-person-plus-fill me-1"></i>Ajouter
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-body p-0">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-primary">
+                <tr>
+                    <th width="60">#ID</th>
+                    <th>Login</th>
+                    <th>Mot de passe (hash)</th>
+                    <th width="150" class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($users as $user): ?>
+<tr>
+    <td><span class="badge bg-secondary"><?= $user->id ?></span></td>
+    <td>
+        <i class="bi bi-person-circle me-1 text-muted"></i>
+        <strong><?= $this->escapeHtml($user->login) ?></strong>
+    </td>
+    <td>
+        <code class="text-muted small">
+            <?= substr($this->escapeHtml($user->password), 0, 30) ?>…
+        </code>
+    </td>
+    <td class="text-center">
+        <a href="<?= $this->url('user', ['action' => 'edit', 'id' => $user->id]) ?>"
+           class="btn btn-sm btn-outline-warning me-1">
+            <i class="bi bi-pencil-fill"></i>
+        </a>
+        <a href="<?= $this->url('user', ['action' => 'delete', 'id' => $user->id]) ?>"
+           class="btn btn-sm btn-outline-danger">
+            <i class="bi bi-trash-fill"></i>
+        </a>
+    </td>
+</tr>
+<?php endforeach; ?>
+
+<?php if (empty($users)): ?>
+<tr>
+    <td colspan="4" class="text-center text-muted py-4">
+        <i class="bi bi-inbox fs-3 d-block mb-2"></i>Aucun utilisateur trouvé.
+    </td>
+</tr>
+<?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="mt-3">
+    <a href="<?= $this->url('home') ?>" class="btn btn-outline-secondary btn-sm">
+        <i class="bi bi-arrow-left me-1"></i>Retour au dashboard
+    </a>
+</div>
