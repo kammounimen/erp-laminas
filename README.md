@@ -1,190 +1,251 @@
-# laminas-mvc-skeleton
+# 🏢 ERP Laminas
 
-> ## 🇷🇺 Русским гражданам
->
-> Мы, участники Laminas, родились и живем в разных странах. У многих из нас есть друзья, родственники и коллеги как в России, так и в Украине. Некоторые из нас родились в России. Некоторые из нас живут в России. У некоторых бабушки и дедушки сражались с фашистами во Второй мировой войне. Здесь никто не поддерживает фашизм.
->
-> У одного из нас есть украинская родственница, которая спаслась из дома вместе с сыном. Поезд задержался из-за бомбежки на дороге впереди. У нас есть друзья, которые прячутся в бомбоубежищах. Мы с тревогой ждем весточки от них после воздушных налетов, которые беспорядочно наносят удары и попадают по больницам, школам, детским садам и домам. Мы не берем это из каких-либо СМИ. Мы наблюдаем это напрямую.
->
-> Вы доверяете нам достаточно, чтоб использовать наши программы, и мы просим вас довериться нам вновь. Мы нуждаемся в помощи. Выходите и протестуйте против этой бесполезной войны. Остановите кровопролитие. Скажите "Нет войне!"
->
-> ## 🇺🇸 To Citizens of Russia
->
-> We at Laminas come from all over the world. Many of us have friends, family and colleagues in both Russia and Ukraine. Some of us were born in Russia. Some of us currently live in Russia. Some have grandparents who fought Nazis in World War II. Nobody here supports fascism.
->
-> One team member has a Ukrainian relative who fled her home with her son. The train was delayed due to bombing on the road ahead. We have friends who are hiding in bomb shelters. We anxiously follow up on them after the air raids, which indiscriminately fire at hospitals, schools, kindergartens and houses. We're not taking this from any media. These are our actual experiences.
->
-> You trust us enough to use our software. We ask that you trust us to say the truth on this. We need your help. Go out and protest this unnecessary war. Stop the bloodshed. Say "stop the war!"
+> Application ERP de gestion d'entreprise développée avec le framework **Laminas MVC** (PHP) et **laminas-db**.
 
-## Introduction
+![PHP](https://img.shields.io/badge/PHP-8.1%20|%208.2%20|%208.3-777BB4?logo=php&logoColor=white)
+![Laminas](https://img.shields.io/badge/Laminas-MVC%203.7-2B6CB0)
+![Docker](https://img.shields.io/badge/Docker-ready-2496ED?logo=docker&logoColor=white)
+![License](https://img.shields.io/badge/License-BSD--3--Clause-green)
 
-This is a skeleton application using the Laminas MVC layer and module
-systems. This application is meant to be used as a starting place for those
-looking to get their feet wet with Laminas MVC.
+---
 
-## Installation using Composer
+## 📌 Table des matières
 
-The easiest way to create a new Laminas MVC project is to use
-[Composer](https://getcomposer.org/). If you don't have it already installed,
-then please install as per the [documentation](https://getcomposer.org/doc/00-intro.md).
+1. [Présentation](#présentation)
+2. [Écosystème du projet](#écosystème-du-projet)
+3. [Fonctionnalités](#fonctionnalités)
+4. [Stack technique](#stack-technique)
+5. [Architecture du projet](#architecture-du-projet)
+6. [Prérequis](#prérequis)
+7. [Installation](#installation)
+8. [Configuration](#configuration)
+9. [Lancement](#lancement)
+10. [Docker](#docker)
+11. [Tests et qualité du code](#tests-et-qualité-du-code)
+12. [Déploiement](#déploiement)
+13. [Contribuer](#contribuer)
+14. [Licence](#licence)
+15. [Auteur](#auteur)
 
-To create your new Laminas MVC project:
+---
+
+## Présentation
+
+**ERP Laminas** est le socle applicatif d'un ERP web. Il s'appuie sur l'architecture **MVC modulaire** de Laminas, la couche d'accès aux données **laminas-db** et la gestion de sessions **laminas-session** pour authentifier et suivre les utilisateurs.
+
+> ✏️ **À compléter :** décrivez en 2-3 phrases le public cible (PME, secteur d'activité…) et les processus métier couverts.
+
+---
+
+## Écosystème du projet
+
+Ce dépôt fait partie d'un ensemble de trois projets liés :
+
+| Dépôt | Rôle |
+|---|---|
+| **erp-laminas** *(ce dépôt)* | ERP de base : socle Laminas MVC, accès base de données, sessions |
+| [`erp-ai-laminas`](https://github.com/kammounimen/erp-ai-laminas) | Variante du frontend avec le module `Invoice` et l'intégration IA (JWT, client HTTP Guzzle) |
+| [`ERP-AI`](https://github.com/kammounimen/ERP-AI) | Backend Python/FastAPI : extraction de factures et recherche intelligente avec Mistral AI |
+
+```
+ erp-laminas  ──(évolue vers)──►  erp-ai-laminas  ──HTTP/JSON──►  ERP-AI (FastAPI + Mistral)
+ (ERP de base)                    (ERP + module IA)                 (extraction, recherche)
+```
+
+> ✏️ Vérifiez que cette description correspond bien à la relation entre vos dépôts, et ajustez-la si besoin.
+
+---
+
+## Fonctionnalités
+
+- 🔐 **Authentification et sessions** (`laminas-session`)
+- 🗄️ **Accès aux données** via `laminas-db`
+- 🧩 **Architecture modulaire** (module `Application`, extensible avec de nouveaux modules métier)
+- 🐳 **Environnement Docker** prêt à l'emploi
+- ✅ **Outils qualité** : PHPUnit, Psalm, PHP_CodeSniffer
+
+> ✏️ **À compléter :** listez les modules fonctionnels réellement implémentés (clients, fournisseurs, produits, stock, facturation, tableau de bord…).
+
+---
+
+## Stack technique
+
+| Couche | Technologie |
+|---|---|
+| Langage | PHP 8.1 / 8.2 / 8.3 |
+| Framework | Laminas MVC `^3.7` |
+| Base de données | `laminas/laminas-db` `^2.22` |
+| Sessions | `laminas/laminas-session` `^2.27` |
+| Conteneurisation | Docker, Docker Compose |
+| Tests | PHPUnit `^10.4`, `laminas-test` |
+| Analyse statique | Psalm `^5.13` |
+| Style de code | PHP_CodeSniffer |
+
+---
+
+## Architecture du projet
+
+```
+erp-laminas/
+├── bin/                    # Scripts utilitaires (cache, etc.)
+├── config/                 # Configuration de l'application
+│   └── autoload/           # Configuration locale (non versionnée)
+├── data/cache/             # Cache applicatif
+├── module/
+│   └── Application/        # Module principal
+│       ├── config/         # Routes, services, vues
+│       ├── src/            # Contrôleurs, modèles…
+│       ├── view/           # Templates
+│       └── test/           # Tests unitaires
+├── public/                 # Point d'entrée web (index.php) et assets
+├── Dockerfile
+├── docker-compose.yml
+├── composer.json
+├── phpcs.xml               # Règles de style
+├── phpunit.xml.dist        # Configuration des tests
+└── psalm.xml               # Analyse statique
+```
+
+> ✏️ Adaptez l'arborescence de `module/Application` à votre structure réelle (contrôleurs, formulaires, tables…).
+
+---
+
+## Prérequis
+
+- **PHP** 8.1, 8.2 ou 8.3, avec l'extension de votre SGBD (ex. `pdo_mysql`)
+- **[Composer](https://getcomposer.org/)**
+- Un serveur de base de données (> ✏️ à préciser : MySQL, MariaDB, PostgreSQL…)
+- **Docker** et **Docker Compose** *(optionnel)*
+
+---
+
+## Installation
 
 ```bash
-$ composer create-project -sdev laminas/laminas-mvc-skeleton path/to/install
+# 1. Cloner le dépôt (branche master)
+git clone https://github.com/kammounimen/erp-laminas.git
+cd erp-laminas
+
+# 2. Installer les dépendances
+composer install
+
+# 3. Activer le mode développement
+composer development-enable
 ```
 
-Once installed, you can test it out immediately using PHP's built-in web server:
+---
+
+## Configuration
+
+Créez votre configuration locale dans `config/autoload/` (ces fichiers ne doivent pas être versionnés) :
+
+```php
+<?php
+// config/autoload/local.php
+return [
+    'db' => [
+        'driver'   => 'Pdo_Mysql',
+        'database' => 'erp_client_db',
+        'hostname' => 'localhost',
+        'username' => 'root',
+        'password' => 'votre_mot_de_passe',
+        'charset'  => 'utf8mb4',
+    ],
+];
+```
+
+> ✏️ Adaptez le nom de la base et le driver à votre environnement, et documentez ici le script SQL d'initialisation si vous en avez un.
+
+⚠️ Ne commitez jamais de mots de passe ou de clés secrètes.
+
+Après toute modification de la configuration :
 
 ```bash
-$ cd path/to/install
-$ php -S 0.0.0.0:8080 -t public
-# OR use the composer alias:
-$ composer serve
+composer clear-config-cache
 ```
 
-This will start the cli-server on port 8080, and bind it to all network interfaces.
-You can then visit the site at http://localhost:8080/ which will bring up Laminas MVC Skeleton welcome page.
+---
 
-**Note:** The built-in CLI server is *for development only*.
-
-## Development mode
-
-The skeleton ships with [laminas-development-mode](https://github.com/laminas/laminas-development-mode)
-by default, and provides three aliases for consuming the script it ships with:
+## Lancement
 
 ```bash
-$ composer development-enable  # enable development mode
-$ composer development-disable # disable development mode
-$ composer development-status  # whether or not development mode is enabled
+composer serve
+# équivalent à : php -S 0.0.0.0:8080 -t public
 ```
 
-You may provide development-only modules and bootstrap-level configuration in
-`config/development.config.php.dist`, and development-only application
-configuration in `config/autoload/development.local.php.dist`. Enabling
-development mode will copy these files to versions removing the `.dist` suffix,
-while disabling development mode will remove those copies.
+Ouvrez ensuite **http://localhost:8080**.
 
-Development mode is automatically enabled as part of the skeleton installation process.
-After making changes to one of the above-mentioned `.dist` configuration files you will
-either need to disable then enable development mode for the changes to take effect,
-or manually make matching updates to the `.dist`-less copies of those files.
+> Le serveur intégré de PHP est réservé au développement.
 
-## Running Unit Tests
+### Commandes Composer utiles
 
-To run the supplied skeleton unit tests, you need to do one of the following:
+| Commande | Description |
+|---|---|
+| `composer serve` | Lance le serveur de développement |
+| `composer development-enable` | Active le mode développement |
+| `composer development-disable` | Désactive le mode développement |
+| `composer development-status` | Affiche l'état du mode développement |
+| `composer clear-config-cache` | Vide le cache de configuration |
+| `composer test` | Lance les tests PHPUnit |
+| `composer static-analysis` | Lance Psalm |
+| `composer cs-check` / `cs-fix` | Vérifie / corrige le style de code |
 
-- During initial project creation, select to install the MVC testing support.
-- After initial project creation, install [laminas-test](https://docs.laminas.dev/laminas-test/):
+---
 
-  ```bash
-  $ composer require --dev laminas/laminas-test
-  ```
-
-Once testing support is present, you can run the tests using:
+## Docker
 
 ```bash
-$ ./vendor/bin/phpunit
+docker-compose up -d --build
 ```
 
-If you need to make local modifications for the PHPUnit test setup, copy
-`phpunit.xml.dist` to `phpunit.xml` and edit the new file; the latter has
-precedence over the former when running tests, and is ignored by version
-control. (If you want to make the modifications permanent, edit the
-`phpunit.xml.dist` file.)
+L'application est alors disponible sur **http://localhost:8080**.
 
-## Running Psalm Static Analysis
-
-To run the supplied skeleton static analysis, you need to do one of the following:
-It is recommended to install the test components from laminas (laminas/laminas-test),
-as this is used in the tests supplied.
-
-  ```bash
-  $ composer require --dev vimeo/psalm psalm/plugin-phpunit laminas/laminas-test
-  ```
-
-Once psalm support is present, you can run the static analysis using:
+Exécuter une commande dans le conteneur :
 
 ```bash
-$ composer static-analysis
+docker-compose run laminas composer install
 ```
 
-## Using docker-compose
+Pour ajouter une extension PHP (ex. `pdo_pgsql`), décommentez les lignes correspondantes dans le `Dockerfile`, puis relancez `docker-compose up -d --build`.
 
-This skeleton provides a `docker-compose.yml` for use with [docker-compose](https://docs.docker.com/compose/);
-it uses the provided `Dockerfile` to build a docker image for the `laminas` container created with `docker-compose`.
+---
 
-Build and start the image and container using:
+## Tests et qualité du code
 
 ```bash
-$ docker-compose up -d --build
+composer test              # tests unitaires (PHPUnit)
+composer static-analysis   # analyse statique (Psalm)
+composer cs-check          # vérification du style
+composer cs-fix            # correction automatique du style
 ```
 
-At this point, you can visit http://localhost:8080 to see the site running.
+Pour adapter la configuration de PHPUnit, copiez `phpunit.xml.dist` en `phpunit.xml` (ignoré par Git).
 
-You can also run commands such as `composer` in the container.
-The container environment is named "laminas" so you will pass that value to `docker-compose run`:
+---
 
-```bash
-$ docker-compose run laminas composer install
-```
+## Déploiement
 
-Some composer packages optionally use additional PHP extensions.
-The Dockerfile contains several commented-out commands which enable some of the more popular php extensions.
-For example, to install `pdo-pgsql` support for `laminas/laminas-db` uncomment the lines:
-
-```sh
-# RUN apt-get install --yes libpq-dev \
-#     && docker-php-ext-install pdo_pgsql
-```
-
-then re-run the `docker-compose up -d --build` line as above.
-
-> You may also want to combine the various `apt-get` and `docker-php-ext-*`
-> statements later to reduce the number of layers created by your image.
-
-## Web server setup
-
-### Apache setup
-
-To setup apache, setup a virtual host to point to the public/ directory of the project and you should be ready to go!
-It should look something like below:
+### Apache
 
 ```apache
 <VirtualHost *:80>
-    ServerName laminasapp.localhost
-    DocumentRoot /path/to/laminasapp/public
-    <Directory /path/to/laminasapp/public>
+    ServerName erp.example.com
+    DocumentRoot /chemin/vers/erp-laminas/public
+    <Directory /chemin/vers/erp-laminas/public>
         DirectoryIndex index.php
         AllowOverride All
-        Order allow,deny
-        Allow from all
-        <IfModule mod_authz_core.c>
         Require all granted
-        </IfModule>
     </Directory>
 </VirtualHost>
 ```
 
-### Nginx setup
-
-To setup nginx, open your `/path/to/nginx/nginx.conf` and add an [include directive](http://nginx.org/en/docs/ngx_core_module.html#include) below into `http` block if it does not already exist:
-
-```nginx
-http {
-    # ...
-    include sites-enabled/*.conf;
-}
-```
-
-Create a virtual host configuration file for your project under `/path/to/nginx/sites-enabled/laminasapp.localhost.conf`.
-It should look something like below:
+### Nginx
 
 ```nginx
 server {
     listen       80;
-    server_name  laminasapp.localhost;
-    root         /path/to/laminasapp/public;
+    server_name  erp.example.com;
+    root         /chemin/vers/erp-laminas/public;
 
     location / {
         index index.php;
@@ -192,41 +253,35 @@ server {
     }
 
     location @php {
-        # Pass the PHP requests to FastCGI server (php-fpm) on 127.0.0.1:9000
         fastcgi_pass   127.0.0.1:9000;
-        fastcgi_param  SCRIPT_FILENAME /path/to/laminasapp/public/index.php;
+        fastcgi_param  SCRIPT_FILENAME /chemin/vers/erp-laminas/public/index.php;
         include fastcgi_params;
     }
 }
 ```
 
-Restart the nginx, now you should be ready to go!
+En production : désactivez le mode développement (`composer development-disable`), servez l'application derrière **HTTPS** avec Apache ou Nginx + PHP-FPM.
 
-## QA Tools
+---
 
-The skeleton does not come with any QA tooling by default, but does ship with
-configuration for each of:
+## Contribuer
 
-- [phpcs](https://github.com/squizlabs/php_codesniffer)
-- [laminas-test](https://docs.laminas.dev/laminas-test/)
-- [phpunit](https://phpunit.de)
+1. Forkez le projet
+2. Créez une branche : `git checkout -b feature/ma-fonctionnalite`
+3. Committez : `git commit -m "Ajout de ma fonctionnalité"`
+4. Poussez : `git push origin feature/ma-fonctionnalite`
+5. Ouvrez une Pull Request
 
-Additionally, it comes with some basic tests for the shipped
-`Application\Controller\IndexController`.
+Avant toute PR : `composer cs-check`, `composer static-analysis` et `composer test`.
 
-If you want to add these QA tools, execute the following:
+---
 
-```bash
-$ composer require --dev squizlabs/php_codesniffer laminas/laminas-test
-```
+## Licence
 
-We provide aliases for each of these tools in the Composer configuration:
+Distribué sous licence **BSD-3-Clause**. Voir [LICENSE.md](LICENSE.md) et [COPYRIGHT.md](COPYRIGHT.md).
 
-```bash
-# Run CS checks:
-$ composer cs-check
-# Fix CS errors:
-$ composer cs-fix
-# Run PHPUnit tests:
-$ composer test
-```
+---
+
+## Auteur
+
+**kammounimen** — [github.com/kammounimen](https://github.com/kammounimen)
